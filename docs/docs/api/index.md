@@ -227,21 +227,112 @@ The `CertificatesAPI` client provides methods for managing Incus certificates.
 # List all certificates
 certificates = await client.certificates.list()
 
-# Add a new certificate
-await client.certificates.add(
-    name="my-certificate",
-    certificate="-----BEGIN CERTIFICATE-----\n...\n-----END CERTIFICATE-----",
-    password="my-password"
+# Create a new certificate
+with open("client.crt", "r") as f:
+    cert_data = f.read()
+
+await client.certificates.create(
+    certificate=cert_data,
+    name="my-client",
+    type="client",
+    restricted=True
 )
 
 # Get a certificate
-certificate = await client.certificates.get("my-certificate")
+certificate = await client.certificates.get("abcdef123456")
 
 # Delete a certificate
-await client.certificates.delete("my-certificate")
+await client.certificates.delete("abcdef123456")
 ```
 
 ### ClusterAPI
+
+The `ClusterAPI` client provides methods for managing Incus clusters.
+
+```python
+# Get cluster information
+cluster = await client.cluster.get()
+
+# List all cluster members
+members = await client.cluster.list_members()
+
+# Add a new member to the cluster
+await client.cluster.add_member(
+    name="node2",
+    url="10.0.0.2:8443"
+)
+
+# Delete a cluster member
+await client.cluster.delete_member("node2")
+```
+
+### OperationsAPI
+
+The `OperationsAPI` client provides methods for managing Incus operations.
+
+```python
+# List all operations
+operations = await client.operations.list()
+
+# Get an operation by ID
+operation = await client.operations.get("operation-uuid")
+
+# Wait for an operation to complete
+result = await client.operations.wait("operation-uuid", timeout=30)
+
+# Cancel an operation
+await client.operations.cancel("operation-uuid")
+```
+
+### ProjectsAPI
+
+The `ProjectsAPI` client provides methods for managing Incus projects.
+
+```python
+# List all projects
+projects = await client.projects.list()
+
+# Create a new project
+await client.projects.create(
+    name="my-project",
+    config={
+        "features.images": "true",
+        "features.profiles": "true"
+    },
+    description="My custom project"
+)
+
+# Get a project
+project = await client.projects.get("my-project")
+
+# Delete a project
+await client.projects.delete("my-project")
+```
+
+## Exceptions
+
+The Incus Python SDK provides a set of exception classes for handling errors that may occur when interacting with the Incus API.
+
+```python
+from incus_sdk.exceptions import IncusNotFoundError, IncusAPIError
+
+try:
+    instance = await client.instances.get("non-existent-instance")
+except IncusNotFoundError as e:
+    print(f"Instance not found: {e.message}")
+except IncusAPIError as e:
+    print(f"API error: {e.message} (Status code: {e.status_code})")
+```
+
+See the [Exceptions](exceptions.md) page for more details on the available exception classes and how to handle them.
+
+## Models
+
+The Incus Python SDK provides model classes for representing Incus resources. These models provide a convenient way to access resource properties and perform operations on resources.
+
+See the [Models](models.md) page for more details on the available model classes.
+
+## API Modules (continued)
 
 The `ClusterAPI` client provides methods for managing Incus clusters.
 

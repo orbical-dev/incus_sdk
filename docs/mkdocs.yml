@@ -38,7 +38,20 @@ nav:
   - Quick Start: quickstart.md
   - API Reference:
     - Overview: api/index.md
+    - Client: api/client.md
+    - API Modules:
+      - Instances: api/modules/instances.md
+      - Images: api/modules/images.md
+      - Networks: api/modules/networks.md
+      - Profiles: api/modules/profiles.md
+      - Storage Pools: api/modules/storage_pools.md
+      - Certificates: api/modules/certificates.md
+      - Cluster: api/modules/cluster.md
+      - Operations: api/modules/operations.md
+      - Projects: api/modules/projects.md
     - Models: api/models.md
+    - Exceptions: api/exceptions.md
+    - Utilities: api/utils.md
   - Examples: examples.md
   - Error Handling: error_handling.md
   - Contributing: contributing.md

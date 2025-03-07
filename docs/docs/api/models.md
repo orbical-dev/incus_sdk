@@ -2,6 +2,26 @@
 
 The Incus Python SDK provides model classes for representing Incus resources. These models provide methods for interacting with the resources they represent.
 
+## Base Model
+
+All model classes in the Incus Python SDK inherit from the base `Model` class, which provides common functionality for all models.
+
+```python
+from incus_sdk.models.base import Model
+
+# Create a model instance from a dictionary
+data = {"name": "example", "description": "An example resource"}
+model = Model.from_dict(data)
+
+# Convert a model to a dictionary
+data_dict = model.to_dict()
+```
+
+### Base Model Methods
+
+- `to_dict()` - Convert the model to a dictionary.
+- `from_dict(data, client=None)` - Create a model instance from a dictionary.
+
 ## Instance Model
 
 The `Instance` model represents an Incus instance (container or virtual machine).
@@ -190,6 +210,148 @@ async with Client() as client:
 - `async create_volume(name, description=None, config=None, content_type=None)` - Create a new volume in the storage pool.
 - `async get_volume(name)` - Get a volume from the storage pool.
 - `async delete_volume(name)` - Delete a volume from the storage pool.
+
+## Certificate Model
+
+The `Certificate` model represents an Incus certificate.
+
+```python
+from incus_sdk import Client
+
+async with Client() as client:
+    # Get a certificate
+    certificate = await client.certificates.get("abcdef123456")
+    
+    # Update the certificate
+    await certificate.update(
+        name="updated-cert",
+        restricted=True,
+        projects=["default", "production"]
+    )
+    
+    # Delete the certificate
+    await certificate.delete()
+```
+
+### Certificate Properties
+
+- `fingerprint` - The fingerprint of the certificate.
+- `certificate` - The certificate data.
+- `name` - The name of the certificate.
+- `type` - The type of certificate (e.g., client).
+- `restricted` - Whether the certificate is restricted.
+- `projects` - List of projects the certificate has access to.
+
+### Certificate Methods
+
+- `async update(name=None, type=None, restricted=None, projects=None)` - Update the certificate.
+- `async delete()` - Delete the certificate.
+
+## Cluster Model
+
+The `Cluster` model represents an Incus cluster.
+
+```python
+from incus_sdk import Client
+
+async with Client() as client:
+    # Get the cluster
+    cluster = await client.cluster.get()
+    
+    # Add a new member to the cluster
+    await cluster.add_member(
+        name="node2",
+        url="10.0.0.2:8443",
+        config={"enabled": True}
+    )
+    
+    # Get a cluster member
+    member = await cluster.get_member("node2")
+```
+
+### Cluster Properties
+
+- `enabled` - Whether clustering is enabled.
+- `member_config` - Configuration for cluster members.
+- `members` - List of cluster members.
+
+### Cluster Methods
+
+- `async get_member(name)` - Get a cluster member by name.
+- `async add_member(name, url, config=None)` - Add a new member to the cluster.
+
+## ClusterMember Model
+
+The `ClusterMember` model represents a member of an Incus cluster.
+
+```python
+from incus_sdk import Client
+
+async with Client() as client:
+    # Get a cluster member
+    member = await client.cluster.get_member("node1")
+    
+    # Update the cluster member
+    await member.update({"config": {"enabled": False}})
+    
+    # Delete the cluster member
+    await member.delete()
+```
+
+### ClusterMember Properties
+
+- `server_name` - The name of the cluster member.
+- `url` - The URL of the cluster member.
+- `database` - Whether the member is a database node.
+- `status` - The current status of the cluster member.
+- `message` - Status message.
+- `architecture` - The architecture of the cluster member.
+- `failure_domain` - The failure domain of the cluster member.
+- `description` - The description of the cluster member.
+- `config` - The configuration of the cluster member.
+- `roles` - The roles of the cluster member.
+
+### ClusterMember Methods
+
+- `async update(config)` - Update the cluster member configuration.
+- `async delete()` - Delete the cluster member.
+
+## Project Model
+
+The `Project` model represents an Incus project.
+
+```python
+from incus_sdk import Client
+
+async with Client() as client:
+    # Get a project
+    project = await client.projects.get("my-project")
+    
+    # Update the project
+    await project.update({
+        "description": "Updated project",
+        "config": {"features.networks": "true"}
+    })
+    
+    # Rename the project
+    await project.rename("new-project-name")
+    
+    # Delete the project
+    await project.delete()
+```
+
+### Project Properties
+
+- `name` - The name of the project.
+- `description` - The description of the project.
+- `config` - The configuration of the project.
+- `used_by` - List of resources using this project.
+
+### Project Methods
+
+- `async update(config)` - Update the project configuration.
+- `async delete()` - Delete the project.
+- `async rename(new_name)` - Rename the project.
 
 ## StorageVolume Model
 
