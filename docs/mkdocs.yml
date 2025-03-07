@@ -57,5 +57,4 @@ plugins:
             docstring_style: google
           rendering:
             show_source: true
-  - social
   - tags
