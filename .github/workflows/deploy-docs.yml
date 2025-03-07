@@ -40,8 +40,16 @@ jobs:
 
       - name: Build documentation
         run: |
+          # Debug information
+          echo "Current directory: $(pwd)"
+          echo "Listing docs directory:"
+          ls -la docs/
+          echo "Content of mkdocs.yml:"
+          cat docs/mkdocs.yml
+          
+          # Move to docs directory and build
           cd docs
-          mkdocs build --clean
+          mkdocs build --verbose
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
