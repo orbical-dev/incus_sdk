@@ -2,7 +2,7 @@
 Instances API client for Incus API.
 """
 
-from typing import Dict, Any, List, Optional, Union
+from typing import Dict, Any, List, Union
 
 from incus_sdk.api.client import APIClient
 from incus_sdk.models.instance import Instance
@@ -49,7 +49,9 @@ class InstancesAPI:
         Returns:
             Instance: The instance.
         """
-        response = await self.client.get(f"/1.0/instances/{name}")
+        response = await self.client.get(
+            f"/1.0/instances/{name}"
+        )
         return Instance(client=self, **response.get("metadata", {}))
 
     async def create(
@@ -77,7 +79,8 @@ class InstancesAPI:
             wait: Whether to wait for the operation to complete.
 
         Returns:
-            Union[Dict[str, Any], Instance]: The operation response or the created instance.
+            Union[Dict[str, Any], Instance]: The operation response or the created
+            instance.
         """
         data = {"name": name, "source": source, "type": instance_type}
 
@@ -115,7 +118,9 @@ class InstancesAPI:
         response = await self.client.put(f"/1.0/instances/{name}", data=config)
 
         if wait and "id" in response.get("metadata", {}):
-            return await self.client.wait_for_operation(response["metadata"]["id"])
+            return await self.client.wait_for_operation(
+                response["metadata"]["id"]
+            )
 
         return response
 
@@ -133,7 +138,9 @@ class InstancesAPI:
         response = await self.client.delete(f"/1.0/instances/{name}")
 
         if wait and "id" in response.get("metadata", {}):
-            return await self.client.wait_for_operation(response["metadata"]["id"])
+            return await self.client.wait_for_operation(
+                response["metadata"]["id"]
+            )
 
         return response
 
@@ -167,10 +174,14 @@ class InstancesAPI:
             "timeout": timeout,
         }
 
-        response = await self.client.put(f"/1.0/instances/{name}/state", data=data)
+        response = await self.client.put(
+            f"/1.0/instances/{name}/state", data=data
+        )
 
         if wait and "id" in response.get("metadata", {}):
-            return await self.client.wait_for_operation(response["metadata"]["id"])
+            return await self.client.wait_for_operation(
+                response["metadata"]["id"]
+            )
 
         return response
 
@@ -191,7 +202,11 @@ class InstancesAPI:
         return await self._state_action(name, "start", stateful=stateful, wait=wait)
 
     async def stop(
-        self, name: str, force: bool = False, stateful: bool = False, wait: bool = False
+        self,
+        name: str,
+        force: bool = False,
+        stateful: bool = False,
+        wait: bool = False
     ) -> Dict[str, Any]:
         """
         Stop an instance.
@@ -306,9 +321,13 @@ class InstancesAPI:
         if cwd:
             data["cwd"] = cwd
 
-        response = await self.client.post(f"/1.0/instances/{name}/exec", data=data)
+        response = await self.client.post(
+            f"/1.0/instances/{name}/exec", data=data
+        )
 
         if wait and "id" in response.get("metadata", {}):
-            return await self.client.wait_for_operation(response["metadata"]["id"])
+            return await self.client.wait_for_operation(
+                response["metadata"]["id"]
+            )
 
         return response

@@ -1,7 +1,34 @@
-build
-venv
-__pycache__
-*.egg-info
+# Python bytecode
+__pycache__/
+*.py[cod]
 *.pyc
 *.pyo
 *.pyd
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+*.egg
+
+# Virtual environments
+venv/
+env/
+.env/
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Testing
+.coverage
+htmlcov/
+.pytest_cache/
+
+# Documentation
+docs/site/
+
+# Misc
+.DS_Store

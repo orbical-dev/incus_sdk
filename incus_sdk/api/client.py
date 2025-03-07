@@ -6,7 +6,7 @@ import json
 import os
 import ssl
 import urllib.parse
-from typing import Dict, Any, Optional, List, Union, Tuple
+from typing import Dict, Any, Optional, Tuple
 
 import aiohttp
 import certifi
@@ -65,7 +65,9 @@ class APIClient:
             if self._session is None:
                 ssl_context = None
                 if self.endpoint.startswith("https://"):
-                    ssl_context = ssl.create_default_context(cafile=certifi.where())
+                    ssl_context = ssl.create_default_context(
+                        cafile=certifi.where()
+                    )
                     if not self.verify:
                         ssl_context.check_hostname = False
                         ssl_context.verify_mode = ssl.CERT_NONE
@@ -83,7 +85,8 @@ class APIClient:
                 )
         except Exception as e:
             raise IncusConnectionError(
-                f"Failed to connect to Incus API: {str(e)}", cause=e
+                f"Failed to connect to Incus API: {str(e)}",
+                cause=e
             )
 
     async def disconnect(self):
@@ -165,7 +168,8 @@ class APIClient:
                         content = json.loads(content)
                     except json.JSONDecodeError as e:
                         raise IncusAPIError(
-                            f"Invalid JSON response: {str(e)}", status_code=500
+                            f"Invalid JSON response: {str(e)}",
+                            status_code=500
                         )
 
                 if response.status >= 400:
@@ -177,21 +181,24 @@ class APIClient:
 
                     if response.status == 404:
                         raise IncusNotFoundError(
-                            error_msg or f"Resource not found: {path}", response=content
+                            error_msg or f"Resource not found: {path}",
+                            response=content
                         )
                     elif response.status == 401:
                         raise IncusAuthenticationError(
-                            error_msg or "Authentication failed", response=content
+                            error_msg or "Authentication failed",
+                            response=content
                         )
                     elif response.status == 403:
                         raise IncusPermissionError(
-                            error_msg or "Permission denied", response=content
+                            error_msg or "Permission denied",
+                            response=content
                         )
                     else:
                         raise IncusAPIError(
                             error_msg or f"API error: {response.status}",
                             status_code=response.status,
-                            response=content,
+                            response=content
                         )
 
                 return content
@@ -297,6 +304,8 @@ class APIClient:
         result = await self.get(path, params=params)
 
         if result.get("status") == "Failure":
-            raise Exception(f"Operation failed: {result.get('err')}")
+            raise Exception(
+                f"Operation failed: {result.get('err')}"
+            )
 
         return result
