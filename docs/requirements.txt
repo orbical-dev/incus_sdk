@@ -1,0 +1,7 @@
+mkdocs>=1.4.0
+mkdocs-material>=9.0.0
+pymdown-extensions>=9.0
+mkdocstrings>=0.20.0
+mkdocstrings-python>=0.9.0
+mkdocs-social-plugin>=0.1.0
+mkdocs-material[imaging]>=9.0.0

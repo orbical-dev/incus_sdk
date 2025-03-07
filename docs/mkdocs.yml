@@ -2,7 +2,32 @@ site_name: Incus Python SDK
 site_description: A Python SDK for the Incus API
 site_author: Incus SDK Team
 repo_url: https://github.com/orbical-dev/incus_sdk
-theme: readthedocs
+repo_name: orbical-dev/incus_sdk
+site_url: https://orbical-dev.github.io/incus_sdk/
+
+theme:
+  name: material
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/toggle-switch-off-outline
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to light mode
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.expand
+    - navigation.indexes
+    - content.code.copy
 
 nav:
   - Home: index.md
@@ -32,3 +57,5 @@ plugins:
             docstring_style: google
           rendering:
             show_source: true
+  - social
+  - tags

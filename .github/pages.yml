@@ -1,0 +1,7 @@
+build:
+  source: docs/site
+  destination: /
+  
+permissions:
+  contents: read
+  pages: write

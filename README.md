@@ -1,5 +1,9 @@
 # Incus Python SDK
 
+[![Documentation](https://img.shields.io/badge/docs-latest-blue.svg)](https://orbical-dev.github.io/incus_sdk/)
+[![PyPI version](https://img.shields.io/pypi/v/incus-sdk.svg)](https://pypi.org/project/incus-sdk/)
+[![Python versions](https://img.shields.io/pypi/pyversions/incus-sdk.svg)](https://pypi.org/project/incus-sdk/)
+
 A Python SDK for interacting with the Incus API. This SDK provides a simple and intuitive way to manage Incus containers, virtual machines, and other resources using Python.
 
 ## Installation
@@ -7,6 +11,33 @@ A Python SDK for interacting with the Incus API. This SDK provides a simple and 
 ```bash
 pip install incus-sdk
 ```
+
+## Documentation
+
+Comprehensive documentation is available at [https://orbical-dev.github.io/incus_sdk/](https://orbical-dev.github.io/incus_sdk/)
+
+The documentation includes:
+- Installation instructions
+- Quick start guide
+- API reference
+- Code examples
+- Error handling guide
+- Contributing guidelines
+
+### Local Development
+
+To build and view the documentation locally:
+
+```bash
+# Install documentation dependencies
+pip install -r docs/requirements.txt
+
+# Build and serve the documentation
+cd docs
+mkdocs serve
+```
+
+Then open http://127.0.0.1:8000 in your browser.
 
 ## Features
 
