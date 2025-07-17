@@ -131,6 +131,7 @@ class APIClient:
         params: Dict[str, Any] = None,
         data: Any = None,
         headers: Dict[str, str] = None,
+        raw: bool = False,
     ) -> Dict[str, Any]:
         """
         Make an API request.
@@ -141,6 +142,7 @@ class APIClient:
             params: Query parameters.
             data: Request data.
             headers: Request headers.
+            raw: Expect raw file.
 
         Returns:
             Dict[str, Any]: The API response.
@@ -167,10 +169,11 @@ class APIClient:
                     try:
                         content = json.loads(content)
                     except json.JSONDecodeError as e:
-                        raise IncusAPIError(
-                            f"Invalid JSON response: {str(e)}",
-                            status_code=500
-                        )
+                        if not raw:
+                            raise IncusAPIError(
+                                f"Invalid JSON response: {str(e)}",
+                                status_code=500
+                            )
 
                 if response.status >= 400:
                     error_msg = ""
