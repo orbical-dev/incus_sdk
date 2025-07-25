@@ -1,3 +1,5 @@
+# ⚠️ This Package is being depercated!!, it will not work with the latest versions of Incus because we do not support it. ⚠️
+
 # Incus Python SDK
 
 [![Documentation](https://img.shields.io/badge/docs-latest-blue.svg)](https://orbical-dev.github.io/incus_sdk/)
